@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" jdk="1.8" jdk_type="JavaSDK">
+	<output-test url="file://$MODULE_DIR$/out/test/EMP"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<levels>
+		<level name="jfreechart-1.0.19" value="project"/>
+		<level name="jfreesvg-2.0" value="project"/>
+		<level name="jcommon-1.0.23" value="project"/>
+	</levels>
+</component>

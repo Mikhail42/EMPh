@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_emp" default="compile.module.emp">
+  <dirname property="module.emp.basedir" file="${ant.file.module_emp}"/>
+  
+  <property name="module.jdk.home.emp" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.emp" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.emp" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.emp" value="-encoding UTF-8 -source 1.6 -target 1.6 ${compiler.args}"/>
+  
+  <property name="emp.output.dir" value="${module.emp.basedir}/out/production/EMP"/>
+  <property name="emp.testoutput.dir" value="${module.emp.basedir}/out/test/EMP"/>
+  
+  <path id="emp.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="emp.module.production.classpath">
+    <path refid="${module.jdk.classpath.emp}"/>
+    <path refid="library.scala-sdk-2.11.7.classpath"/>
+    <path refid="library.jfreechart-1.0.19.classpath"/>
+    <path refid="library.jfreesvg-2.0.classpath"/>
+    <path refid="library.jcommon-1.0.23.classpath"/>
+  </path>
+  
+  <path id="emp.runtime.production.module.classpath">
+    <pathelement location="${emp.output.dir}"/>
+    <path refid="library.scala-sdk-2.11.7.classpath"/>
+    <path refid="library.jfreechart-1.0.19.classpath"/>
+    <path refid="library.jfreesvg-2.0.classpath"/>
+    <path refid="library.jcommon-1.0.23.classpath"/>
+  </path>
+  
+  <path id="emp.module.classpath">
+    <path refid="${module.jdk.classpath.emp}"/>
+    <pathelement location="${emp.output.dir}"/>
+    <path refid="library.scala-sdk-2.11.7.classpath"/>
+    <path refid="library.jfreechart-1.0.19.classpath"/>
+    <path refid="library.jfreesvg-2.0.classpath"/>
+    <path refid="library.jcommon-1.0.23.classpath"/>
+  </path>
+  
+  <path id="emp.runtime.module.classpath">
+    <pathelement location="${emp.testoutput.dir}"/>
+    <pathelement location="${emp.output.dir}"/>
+    <path refid="library.scala-sdk-2.11.7.classpath"/>
+    <path refid="library.jfreechart-1.0.19.classpath"/>
+    <path refid="library.jfreesvg-2.0.classpath"/>
+    <path refid="library.jcommon-1.0.23.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.emp">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.emp">
+    <patternset refid="excluded.from.module.emp"/>
+  </patternset>
+  
+  <path id="emp.module.sourcepath">
+    <dirset dir="${module.emp.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.emp" depends="compile.module.emp.production,compile.module.emp.tests" description="Compile module EMP"/>
+  
+  <target name="compile.module.emp.production" depends="register.custom.compilers" description="Compile module EMP; production classes">
+    <mkdir dir="${emp.output.dir}"/>
+    <javac2 destdir="${emp.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.emp}/javac">
+      <compilerarg line="${compiler.args.emp}"/>
+      <bootclasspath refid="emp.module.bootclasspath"/>
+      <classpath refid="emp.module.production.classpath"/>
+      <src refid="emp.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.emp"/>
+    </javac2>
+    
+    <copy todir="${emp.output.dir}">
+      <fileset dir="${module.emp.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.emp.tests" depends="register.custom.compilers,compile.module.emp.production" description="compile module EMP; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.emp" description="cleanup module">
+    <delete dir="${emp.output.dir}"/>
+    <delete dir="${emp.testoutput.dir}"/>
+  </target>
+</project>
