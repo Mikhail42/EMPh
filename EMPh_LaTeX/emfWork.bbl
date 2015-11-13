@@ -1,0 +1,79 @@
+\begin{thebibliography}{1}
+\def\selectlanguageifdefined#1{
+\expandafter\ifx\csname date#1\endcsname\relax
+\else\selectlanguage{#1}\fi}
+\providecommand*{\href}[2]{{\small #2}}
+\providecommand*{\url}[1]{{\small #1}}
+\providecommand*{\BibUrl}[1]{\url{#1}}
+\providecommand{\BibAnnote}[1]{}
+\providecommand*{\BibEmph}[1]{#1}
+\ProvideTextCommandDefault{\cyrdash}{\hbox to.8em{--\hss--}}
+\providecommand*{\BibDash}{\ifdim\lastskip>0pt\unskip\nobreak\hskip.2em\fi
+\cyrdash\hskip.2em\ignorespaces}
+
+\bibitem{Kyznetcov04MMF}
+\selectlanguageifdefined{english}
+\BibEmph{А.В.~Кузнецов}. {Методы математической
+  физики}. \BibDash
+\newblock Ярославль~: Яросл. гос. ун-т, 2004. \BibDash
+\newblock 200~c.
+
+\bibitem{SpecFuncMF}
+\selectlanguageifdefined{english}
+\BibEmph{А.Ф.~Никифоров, В.Б.~Уваров}.
+  {Специальные функции математической
+  физики}. \BibDash
+\newblock 2-е издание. \BibDash
+\newblock М.~: Наука, 1984. \BibDash
+\newblock 346~с.
+
+\bibitem{TihonovAndSamarskiy99EMF}
+\selectlanguageifdefined{english}
+\BibEmph{А.Н.~Тихонов, А.А.~Самарский}. {Уравнения
+  математической физики: Учеб. пособие}.
+  \BibDash
+\newblock 6-е издание. \BibDash
+\newblock М.~: Изд-во МГУ, 1999. \BibDash
+\newblock 799~с.
+
+\bibitem{LegendreRochester}
+\selectlanguageifdefined{english}
+\BibEmph{{A. Clark, Jr.}} {Legendre Polynomials}~// {Applications and
+  Examples}. \BibDash
+\newblock University of Rochester, 2010. \BibDash
+\newblock P.~21. \BibDash
+\newblock URL:
+  \BibUrl{http://www.me.rochester.edu/courses/ME201/webexamp/legendre.pdf}.
+
+\bibitem{Legendre08AMS}
+\selectlanguageifdefined{english}
+\BibEmph{Hesthaven~Jan~S., Kirby~Robert~M.} {Filtering in Legendre spectral
+  methods}~// \BibEmph{Mathematics of computation}. \BibDash
+\newblock 2008. \BibDash July. \BibDash
+\newblock Vol.~77, no. 263. \BibDash
+\newblock P.~1425--1452. \BibDash
+\newblock URL:
+  \BibUrl{http://www.ams.org/journals/mcom/2008-77-263/S0025-5718-08-02110-8/S0025-5718-08-02110-8.pdf}.
+
+\bibitem{ApproxSob82AMS}
+\selectlanguageifdefined{english}
+\BibEmph{Canuto~C., Quarteroni~A.} {Approximation Result for Orthogonal
+  Polynomials in Sobolev Spaces}~// \BibEmph{Mathematics of computation}.
+  \BibDash
+\newblock 1982. \BibDash January. \BibDash
+\newblock Vol.~38, no. 157. \BibDash
+\newblock P.~67--86. \BibDash
+\newblock URL:
+  \BibUrl{http://www.ams.org/journals/mcom/1982-38-157/S0025-5718-1982-0637287-3/S0025-5718-1982-0637287-3.pdf}.
+
+\bibitem{matanMSU}
+\selectlanguageifdefined{english}
+\BibEmph{Г.И.~Архипов, В.А.~Садовничий,
+  В.Н.~Чубариков}. {Лекции по математическому
+  анализу}. {Классический университетский
+  учебник}. \BibDash
+\newblock 5-е издание. \BibDash
+\newblock М.~: Дрофа, 2004. \BibDash
+\newblock 639~с.
+
+\end{thebibliography}

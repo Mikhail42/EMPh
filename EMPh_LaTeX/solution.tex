@@ -1,0 +1,327 @@
+\section{Представление решения в виде ряда}
+	\subsection{Упрощение модели}	
+	Оператор Лапласа в сферических координатах задается уравнением 
+	\begin{equation}
+   	\label{eq: Laplass_share_basic}
+   	\triangle u(r,\theta,\varphi,t) = \frac{1}{r^2} \pdv{}{r} \left( r^2 {\pdv{u}{r}} \right) + \frac{1}{r^2 \sin \theta} \pdv{}{\theta} \left( \sin \theta {\pderiv{u}{\theta}} \right) + \frac{1}{r^2\sin^2 \theta} {\partial^2 u \over \partial \varphi^2} .
+	\end{equation}
+	
+	В нашем случае, $r$ является константой $(r \equiv R)$. Также, можно выбрать базис (систему координат) так, чтобы функция $u$ зависела лишь от одного пространственного параметра, а именно, от $\theta$ (как это показано на рис. \ref{fig:sphere}). 
+	Поэтому оператор Лапласа можно записать в следующем виде: 
+	\begin{equation}
+   	\label{eq: my_Laplas_share}
+   	\triangle u(\theta,t) = \frac{1}{R^2 \sin \theta} \pdv{}{\theta} \left( \sin \theta {\pderiv{u}{\theta}} \right).
+	\end{equation}
+	
+	Таким образом, из уравнений (\ref{eq: init_equation}) и (\ref{eq: my_Laplas_share}) получаем, что 
+	\begin{equation}
+   	\label{eq: init_equation_before_decomposition}
+   	c \pderiv{u}{t} = \frac{K}{R^2}\times\frac{1}{\sin \theta} \pdv{}{\theta} \left( \sin \theta \pderiv{u}{\theta} \right) + \beta f (\overrightarrow{r}).
+	\end{equation} 
+	Введем теперь замену $ u(t,\theta)=X(\theta)T(t) $:
+	\begin{equation}
+   	\label{eq: u=XT }
+	c X(\theta) \dv{T}{t} = \frac{K}{R^2} T(t) \frac{1}{\sin \theta} \dv{}{\theta} \left( \sin \theta \dv{X}{\theta} \right) + \beta f (\overrightarrow{r}).
+	\end{equation} 
+	
+	\subsection{Решение однородного уравнения}
+	Рассмотрим однородное уравнение~(\ref{eq: u=XT }): 
+	\begin{equation}
+   	\label{eq: uniform}
+   	c X(\theta) \dv{T}{t} = \frac{K}{R^2} T(t) \frac{1}{\sin \theta} \dv{}{\theta} \left( \sin \theta \dv{X}{\theta} \right), 
+   	\end{equation} 	
+	или
+	$$ c \dv{\ln{T}}{t} = \frac{K}{R^2}\times\frac{1}{{X(\theta) \sin \theta}} \dv{}{\theta} 
+	\left( \sin \theta \dv{X}{\theta} \right). $$
+	
+	Согласно  \cite[стр. 50]{Kyznetcov04MMF}, т. к. $\theta \text{ и } t$ --- независимые переменные, то  
+	$$ \od{\ln{T}}{t} = \frac{K}{cR^2}\times\frac{1}{{X(\theta) \sin \theta}} \dv{}{\theta} 
+	\left( \sin \theta \dv{X}{\theta} \right) = -\mu,$$ 
+	\begin{explanationx}
+		\item[где] $\mu$ --- некоторая константа. 
+	\end{explanationx}  
+	Следовательно, мы имеем два дифференциальных уравнения: 
+		\begin{align}
+		\label{eq:sol_decomp_1}
+			\dv{\ln{T}}{t} + \mu &=0, \\
+		\label{eq:sol_decomp_2}		
+			 \dv{}{\theta}\left( \sin \theta \dv{X}{\theta} \right) 
+			+ \mu \frac{cR^2}{K}  \sin \theta X &= 0.
+		\end{align}
+			
+	Введем замену $x = \cos(\theta)$ и будем учитывать, что $\theta \in (0;\pi)$. Тогда
+	$$ \dd{x} = -\sin(\theta)\dd{\theta}, \quad \dv{\theta} = -\sin(\theta) \dv{x} = -\sqrt{1-x^2}\dv{x}, $$
+	 и	уравнение~(\ref{eq:sol_decomp_2}) преобразуется в 
+	$$
+		\dv{x}\left( -(1-x^2) \dv{X}{x} \right) - \mu \frac{cR^2}{K} X = 0,
+	$$
+	или
+	\begin{equation}
+		\label{eq:solution_hypergeimetrix_type}
+		(1-x^2)\dv[2]{X}{x} - 2x \dv{X}{x} + \mu \frac{cR^2}{K} X = 0.
+	\end{equation}
+	
+	Это есть уравнение гипергеометрического типа~(\cite[с. 12]{SpecFuncMF}). 
+	Введем новые функции: $ \sigma(x) = 1-x^2 $, $ \tau(x) = -2x$, $\lambda = \mu \frac{cR^2}{K}$. Имеем:
+	\begin{equation}
+		\label{eq:solution_hypergeimetrix_type_2}
+		\sigma(x)\od[2]{X}{x} + \tau(x)\od{X}{x} + \lambda X = 0.
+	\end{equation}
+	Для этого уравнения строится класс наиболее простых решений --- классические ортогональные полиномы, определяемые формулой Родрига~\cite[\S\,9 п.\,2]{SpecFuncMF}:
+	\begin{equation}
+		\label{eq:solution_Rodrigues_equation}
+		y_n (x) = \frac{Y_n}{\rho(x)}\od[n]{}{x}\left[ \sigma^n \rho(x) \right], \qquad \forall n \in \mathbb{N}_0,
+	\end{equation}
+	\begin{explanationx}
+		\item[где] $\rho(x)$ --- функция, удовлетворяющая уравнению $ (\sigma \rho )' = \tau \rho$;
+		\item $\{Y_n\}$ --- некоторые константы.
+	\end{explanationx} 
+	При этом коэффициенты $ \lambda $  уравнения~(\ref{eq:solution_hypergeimetrix_type_2}), связаны соотношением $$ \lambda + n\tau ' + \rfrac{1}{2}n(n-1)\sigma '' = 0.$$
+	
+	В нашем случае, для нахождения множества коэффициентов получаем уравнения 
+	\begin{equation} 
+		\label{eq:solution_lambda_n}
+		\lambda_n = n(1+n), \qquad \forall n \in \mathbb{N}_0. 
+	\end{equation}
+	
+	Согласно~\cite[часть~II, \S\,1 п.\,3]{TihonovAndSamarskiy99EMF}, полиномы Лежандра $ \left\lbrace  P_n (x) \right\rbrace  $ являются собственными функциями оператора~$ \dv{x}\left((1-x^2) \dv{}{x} \right) $, соответствующие (биективно по эквивалентному номеру) полученным собственным значениям~$\left\lbrace  \lambda_n  \right\rbrace.$
+	
+	Используя полученные собственные функции  $ \left\lbrace  P_n (x) \right\rbrace  $, полная система которых одновременно является базисом для разложения других функций, мы можем записать функцию $ X $ через ряд:
+	\begin{equation}
+		\label{eq:solution_X_from_Legandr}
+		X(x) = \sum_{k=0}^{+\infty} {B_k P_k (x)}.
+	\end{equation}
+	Возвращаясь к переменной $\theta$, получаем: 
+	\begin{equation}
+		\label{eq:solution_X_from_Legandr_withTheta}
+		X(\theta) = \sum_{k=0}^{+\infty} {B_k P_k (\cos\theta)}.
+	\end{equation}
+	
+	В то же время, по уравнению~(\ref{eq:sol_decomp_1}), с учетом полученных в системе~(\ref{eq:solution_lambda_n}) собственных чисел, можно определить функции 
+	\begin{equation}
+	\label{eq:solution_T_n} T_n(t) = e^{-\mu_n t} = e^{-n(1+n)\frac{K}{cR^2} t}, \qquad \forall n \in \mathbb{N}_0,
+	\end{equation}   
+	причем каждый $T_n, \; n \in \mathbb{N}_0,$ будет соответствовать $X_n$. Решениями уравнения~(\ref{eq:sol_decomp_1}), вообще говоря, являются функции $\{C_n T_n(t)\}$, где $\{C_n\}$ --- некоторое множество констант.
+	
+	Таким образом, мы можем разложить функцию $ u(t,\theta)=X(\theta)T(t)$ в ряд: 
+	\begin{equation} 
+		\label{eq:solution_u_via_sum}
+u(t,\theta)=\sum_{k=0}^{+\infty}{C_k T_k(t)B_k P_k(\cos\theta)}=\sum_{k=0}^{+\infty}{A_k T_k(t)P_k (\cos\theta)} .
+	\end{equation}
+		
+	\subsection{Решение неоднородного уравнения}
+	Пусть функция $f$ уравнения~(\ref{eq: init_equation}) разлагается в ряд по полученным собственным функциям: 
+	$$ f(\theta) =  \sum_{k=0}^{+\infty} {f_k P_k(\cos\theta)},$$
+	при этом коэффициенты $ \left\lbrace f_k \right\rbrace $ находятся из условия ортогональности полиномов Лежандра:
+	\begin{equation}
+	\begin{split}
+	\int_{-1}^{1}{f(\theta)P_n (\cos\theta) \dd{\cos\theta}} 
+		&= \sum_{k=0}^{+\infty} \int_{-1}^{1}{f_k P_k (\cos\theta)P_n (\cos\theta)} \dd{\cos\theta} = \\
+		&= {\left\Vert P_n  \right\Vert}^2 f_n, \qquad \forall n \in \mathbb{N}_0. 
+	\end{split}
+	\end{equation}	
+	Таким образом, 
+	\begin{equation}
+	\label{eq: f_n}
+		f_n = \frac{1}{{\left\Vert P_n  \right\Vert}^2}\int_{-1}^{1}{f(\theta)P_n (\cos\theta) \dd{\cos\theta}}, \qquad \forall n \in \mathbb{N}_0. 
+	\end{equation}	
+	
+	Будем находить функцию $u$, используя метод вариации произвольных постоянных $\{A_k\}$: $\forall k \in \mathbb{N}_0 \; A_k = A_k(t)$. В соответствии с уже полученным разложением~(\ref{eq:solution_u_via_sum}), уравнение~(\ref{eq: init_equation_before_decomposition}) 
+можно переписать в виде 
+	\begin{multline}
+	\label{eq: solution_dif_eq_withSum}
+   	c \sum_{k=0}^{+\infty} {  P_k (\cos\theta)\dv{A_k T_k}{t}} = \\ =\frac{K}{R^2}\times\frac{1}{\sin \theta} \dv{}{\theta} \left( 
+   				\sin \theta \sum_{k=0}^{+\infty} { A_k T_k\dv{ P_k (\cos\theta)}{\theta}}
+   	 \right) 
+   	+ \beta \sum_{k=0}^{+\infty} {f_k P_k(\cos\theta)}.
+	\end{multline}
+	
+   	Очевидно, что если
+   	\begin{equation}
+   	\label{eq: solution_dif_eq_foreach}
+   	\begin{split}	
+   	c  { P_k (\cos\theta)\dv{A_k T_k}{t}} =& A_k T_k\frac{K}{R^2}\times\frac{1}{\sin \theta} \dv{}{\theta} \left( 
+   				\sin \theta  { \dv{ P_k (\cos\theta)}{\theta}}
+   	 \right) + \\
+   	&+ \beta {f_k P_k(\cos\theta)}, \qquad \forall k \in \mathbb{N}_0,
+	\end{split}   	
+   	\end{equation}
+   	то равенство в уравнении~(\ref{eq: solution_dif_eq_withSum}) будет выполняться.
+   	
+    Т.к. $\{P_k\}$ --- собственные функции оператора ~$ \dv{x}\left((1-x^2) \dv{}{x} \right) $, то
+   	$$ \frac{1}{\sin\theta}\dv{}{\theta} \left( \sin \theta  { \dv{P_k (\cos\theta)}{\theta}}\right) = -\lambda_k  P_k (\cos\theta), $$ 
+   	и из системы~(\ref{eq: solution_dif_eq_foreach}) получаем
+   	$$
+   	c  { P_k (\cos\theta)\dv{A_k T_k}{t}} = -  \lambda_k  P_k (\cos\theta) A_k T_k\frac{K}{R^2}  
+    + \beta {f_k P_k(\cos\theta)}, \qquad \forall k \in \mathbb{N}_0, 	
+   	$$
+ или 
+ 	\begin{equation}
+ 	\label{eq: dif_eq_with_A_k(t)T_k(t)}
+   	\dv{A_k T_k}{t} = - k(k+1) \frac{K}{cR^2}  A_k T_k  
+    + \beta \frac{f_k }{c}, \qquad \forall k \in \mathbb{N}_0.
+   	\end{equation}
+   	
+   	Решие уравнения $y' = - ay + b$ при $a \neq 0$ есть $ y = \frac{b}{a}+Ce^{-at}$, где $C$ --- некоторая константа. Поэтому решения системы~(\ref{eq: dif_eq_with_A_k(t)T_k(t)}) есть 
+   	\begin{equation}
+   	A_k(t) T_k =  
+   	\begin{cases}
+	    \frac{\beta \frac{f_k }{c}}{k(k+1) \frac{K}{cR^2}} + D_k T_k 
+	    = \frac{\beta f_k}{k(k+1)}\times\frac{R^2}{K} + D_k T_k, & \forall k \in \mathbb{N}, \\
+   	 	f_k\frac{\beta}{c}t + D_k, & k = 0,
+   	 \end{cases}
+   	 \end{equation}
+   	 \begin{explanationx}
+	\item[где] $\{D_k\}$ --- некоторое множество констант.
+   	 \end{explanationx}
+    Тогда из уравнения~(\ref{eq:solution_u_via_sum}) следует, что $u(\theta,t)$ есть
+   	\begin{equation}
+   	\label{eq: u_sum_over_D_k}
+     \begin{split}
+   	 u(\theta,t) =& \left( f_k \frac{\beta}{c}t + D_0 \right) P_0(\cos\theta) + \\
+   	 &+\sum_{k=1}^{+\infty}{\left( 
+   	 \frac{R^2}{K}\times\frac{\beta f_k}{k(k+1)} + D_k T_k(t)
+		\right) P_k(\cos\theta)
+   	 }.
+   	  \end{split} 
+   	 \end{equation}
+	Применим однородное условие~(\ref{eq: init_equation}):
+	\begin{equation}
+		D_k =  
+		\begin{cases}
+			-\frac{R^2}{K}\times\frac{\beta f_k}{k(k+1)}, & \forall k \in \mathbb{N}, \\
+			0, & k = 0.
+		\end{cases}
+	\end{equation}
+	С учетом этого условия, окончательно получаем, что 
+	\begin{equation}
+   	\label{eq: u_final_sum_without_f_k}
+   	 \begin{split}
+   	 u(\theta,t) =  
+   	 \beta \frac{R^2}{K}\sum_{k=1}^{+\infty}{
+	   		 \frac{f_k}{k(k+1)}\left(1 - e^{-k(1+k)\frac{K}{cR^2} t}
+		 \right)P_k(\cos\theta)} + \\
+	 + f_0 \frac{\beta}{c} P_0(\cos\theta) t.
+   	  \end{split} 
+   	 \end{equation}
+   	 
+   	\subsection{Определение вида коэффициентов разложения $\{f_k\}_{0}^{+\infty}$ функции $f$}
+   	    Согласно формулировки задания, функция $f(\theta)$ будет определяться из уравнения 
+    \begin{equation}
+    	f(\theta) = \eta(cos(\theta))\cos\theta ,
+    \end{equation}  
+     \begin{explanationx}
+	\item[где] $\eta(x)$ --- функция Хевисайда.
+   	 \end{explanationx}
+    
+    
+	Определим теперь по формуле~(\ref{eq: f_n}) коэффициенты $\{f_k\}$: 
+	\begin{equation}
+	\label{eq: f_k_over_intsfP}
+	\begin{split}
+		f_k = &\frac{1}{\norm{P_k}^2}\int_{0}^{1}{\cos\theta P_k (\cos\theta) \dd{\cos\theta}} \\ 
+			= &\frac{1}{\norm{P_k}^2}\int_{0}^{1}{xP_k(x)\dd{x}}, \qquad \forall k \in \mathbb{N}_0.
+	\end{split}	
+	\end{equation} 
+	Норма $\norm{P_k}$, для всех $k\in \mathbb{N}_0$, согласно~\cite[часть II, \S\,1 п.\,5]{TihonovAndSamarskiy99EMF} определяется из уравнения
+	\begin{equation}
+	\label{eq: normPk}
+	\norm{P_k} = \sqrt{\frac{2}{2n+1}}.
+	\end{equation} 
+	
+	Согласно~\cite[ур-е 26]{LegendreRochester}, для всех целых $n>1$ 
+	\begin{multline}	
+	\label{eq: int_[0;1]_xP_dx}
+		\int_{0}^{1}{x P_n (x) \dd{x}} = \\ 
+		= \frac{n(2n+3)P_{n-2}(0)-(2n+1)P_n(0)-(n+1)(2n-1)P_{n+2}(0)}{(2n-1)(2n+1)(2n+3)}.
+	\end{multline} 
+	Для $n=0$ имеем: 
+	\begin{equation} 
+		\int_{0}^{1}{x P_n (x) \dd{x}} = \int_{0}^{1}{x\dd{x}} = \frac{1}{2},
+	\end{equation} 
+	а для $n=1$:
+	\begin{equation} 
+		\int_{0}^{1}{x P_n (x) \dd{x}} = \int_{0}^{1}{x^2\dd{x}} = \frac{1}{3}.
+	\end{equation} 
+	
+	Согласно~\cite[ур-е 18]{LegendreRochester}, для нечетных $n$  $P_n(0)=0$ и для целых $n$ $P_{2n}(0)$ можно найти из уравнения
+	\begin{equation} 
+		P_{2n}(0) = \frac{{(-1)}^n (2n)!}{2^{2n}{(n!)}^2}.
+	\end{equation}
+Будем определять последующие коэффициенты рекурсивно:
+	\begin{equation} 
+	\label{eq: P_2n+2_recursively}
+	P_{2n+2}(0) = - P_{2n}(0) \frac{(2n+1)(2n+2)}{4(n+1)^2} = - P_{2n}(0) \frac{2n+1}{2(n+1)},
+	\end{equation}
+	начиная с $P_{0}(0)=1$.
+	Соотвественно, для 	$P_{2n-2}(0)$ имеем:
+	\begin{equation} 
+	P_{2n-2}(0) = - P_{2n}(0) \frac{4n^2}{2n(2n-1)} = - P_{2n}(0) \frac{2n}{2n-1} .
+	\end{equation}
+	
+	Подставим полученные значения в формулу~(\ref{eq: int_[0;1]_xP_dx}):
+	\begin{multline}	
+	\label{eq: int_[0;1]_xP_dx_final}
+		\int_{0}^{1}{x P_{2n} (x) \dd{x}} = \\ 
+		= \frac{2n(4n+3)P_{2n-2}(0)-(4n+1)P_{2n}(0)-(2n+1)(4n-1)P_{2n+2}(0)}{(4n-1)(4n+1)(4n+3)} = \\
+		= - P_{2n}(0) \frac{2n(4n+3)\frac{2n}{2n-1}+(4n+1)-(2n+1)(4n-1)\frac{2n+1}{2(n+1)}}{(4n-1)(4n+1)(4n+3)} = \\
+		= -  P_{2n}(0) \frac{(4n+3)(4n-1)(4n+1)}{2(4n-1)(4n+1)(4n+3)(2n-1)(n+1)} = \\
+		= -  P_{2n}(0) \frac{1}{2(2n-1)(n+1)}.
+	\end{multline} 
+	
+	Найдем теперь коэффициенты разложения функции~$f$, используя~(\ref{eq: f_k_over_intsfP}), (\ref{eq: normPk}) и~(\ref{eq: int_[0;1]_xP_dx_final}). 
+	
+	Из того, что для целых $k \in \mathbb{N}$ $P_{2k+1}(0)=0$, следует, что $f_{2k+1}=0$ для всех $k \in \mathbb{N}$. Для $n=0$ имеем: 
+	\begin{equation} 
+	f_0 = \frac{1}{2}\int_{0}^{1}{x\dd{x}} = \frac{1}{4},
+	\end{equation} 
+	для $n=1$:
+	\begin{equation} 
+	f_1 = \frac{3}{2} \int_{0}^{1}{x^2\dd{x}} = \frac{1}{2},
+	\end{equation} 
+	 для остальных $n>0$:
+	\begin{equation}
+	\label{eq: f_n_simple} 
+	\begin{split}
+	f_{2n} =& -P_{2n}(0)\frac{2 \cdot 2n+1}{2}\times\frac{1}{2(2n-1)(n+1)} = \\ 
+	  = &	-P_{2n}(0)\frac{4n+1}{4(n+1)(2n-1)}.
+	\end{split}
+	\end{equation}
+	Напомним, что (для $n \in \mathbb{N}_0$)
+	\begin{equation} 
+	\label{eq: P_2n+2_recursively}
+	P_{2n+2}(0) = - P_{2n}(0) \frac{2n+1}{2(n+1)},
+	\end{equation} 
+	или (для $n \in \mathbb{N}$)
+	\begin{equation} 
+	\label{eq: P_2n_recursively}
+	P_{2n}(0) = - P_{2n-2}(0) \frac{2n-1}{2n}, 
+	\end{equation}
+	причем $P_{0}(0)=1$.
+	
+	Подставляя (\ref{eq: P_2n_recursively}) в формулу~(\ref{eq: f_n_simple}), для $n \in \mathbb{N}$ получаем: 
+	\begin{equation}
+	\label{eq: f_n_simple_final} 
+	\begin{split}
+	f_{2n} =& P_{2n-2}(0) \frac{2n-1}{2n}\times\frac{4n+1}{4(n+1)(2n-1)} = \\
+	=& P_{2n-2}(0) \frac{4n+1}{8n(n+1)}.
+	\end{split}
+	\end{equation}
+	
+	Подставим, наконец, полученные значения в ряд~(\ref{eq: u_final_sum_without_f_k}):
+	\begin{equation}
+   	\label{eq: u_final_sum}
+   	 \begin{split}
+   	 u(\theta,t) =&  
+   	 \beta \frac{R^2}{K}\sum_{k=1}^{+\infty}{
+	   		 \frac{f_k}{k(k+1)}\left(1 - e^{-k(1+k)\frac{K}{cR^2} t}
+		 \right)P_k(\cos\theta)} + \\
+	 &+ f_0 \frac{\beta}{c} P_0(\cos\theta) t = \\
+	 =& \beta \frac{R^2}{K}\sum_{k=1}^{+\infty}{
+	   		 \frac{(4k+1)P_{2k-2}(0)}{16k^2 (2k+1)(k+1)}\left(1 - e^{-2k(1+2k)\frac{K}{cR^2} t}
+		 \right)P_{2k}(\cos\theta)} + \\
+	 &+ \frac{\beta}{4c} t + \beta \frac{R^2}{4K}
+	   		 \left(1 - e^{-2\frac{K}{cR^2} t}
+		 \right)\cos\theta.
+   	  \end{split} 
+   	 \end{equation}

@@ -1,0 +1,106 @@
+% Stereographic and cylindrical map projections
+% Author: Tomasz M. Trzeciak
+% Source: LaTeX-Community.org 
+%         <http://www.latex-community.org/viewtopic.php?f=4&t=2111>
+\documentclass[parskip]{scrartcl}
+\usepackage{tikz}
+\usetikzlibrary{calc,fadings,decorations.pathreplacing}
+\usepackage{verbatim}
+%% helper macros
+\newcommand\pgfmathsinandcos[3]{%
+  \pgfmathsetmacro#1{sin(#3)}%
+  \pgfmathsetmacro#2{cos(#3)}%
+}
+\newcommand\LongitudePlane[3][current plane]{%
+  \pgfmathsinandcos\sinEl\cosEl{#2} % elevation
+  \pgfmathsinandcos\sint\cost{#3} % azimuth
+  \tikzset{#1/.style={cm={\cost,\sint*\sinEl,0,\cosEl,(0,0)}}}
+}
+\newcommand\LatitudePlane[3][current plane]{%
+  \pgfmathsinandcos\sinEl\cosEl{#2} % elevation
+  \pgfmathsinandcos\sint\cost{#3} % latitude
+  \pgfmathsetmacro\yshift{\cosEl*\sint}
+  \tikzset{#1/.style={cm={\cost,0,0,\cost*\sinEl,(0,\yshift)}}} %
+}
+\newcommand\DrawLongitudeCircle[2][1]{
+  \LongitudePlane{\angEl}{#2}
+  \tikzset{current plane/.prefix style={scale=#1}}
+   % angle of "visibility"
+  \pgfmathsetmacro\angVis{atan(sin(#2)*cos(\angEl)/sin(\angEl))} %
+  \draw[current plane] (\angVis:1) arc (\angVis:\angVis+180:1);
+  \draw[current plane,dashed] (\angVis-180:1) arc (\angVis-180:\angVis:1);
+}
+\newcommand\DrawLatitudeCircle[2][1]{
+  \LatitudePlane{\angEl}{#2}
+  \tikzset{current plane/.prefix style={scale=#1}}
+  \pgfmathsetmacro\sinVis{sin(#2)/cos(#2)*sin(\angEl)/cos(\angEl)}
+  % angle of "visibility"
+  \pgfmathsetmacro\angVis{asin(min(1,max(\sinVis,-1)))}
+  \draw[current plane] (\angVis:1) arc (\angVis:-\angVis-180:1);
+  \draw[current plane,dashed] (180-\angVis:1) arc (180-\angVis:\angVis:1);
+}
+
+%% document-wide tikz options and styles
+\tikzset{%
+  >=latex, % option for nice arrows
+  inner sep=0pt,%
+  outer sep=2pt,%
+  mark coordinate/.style={inner sep=0pt,outer sep=0pt,minimum size=3pt,
+    fill=black,circle}%
+}
+\usepackage{3dplot} %requires 3dplot.sty to be in same directory, or in your LaTeX installation
+\usepackage[active,tightpage]{preview}
+\usepackage[margin=15mm]{geometry}
+\PreviewEnvironment{tikzpicture}
+\setlength{\PreviewBorder}{12pt}%
+\usepgflibrary{lindenmayersystems}  
+\usepgflibrary[lindenmayersystems] 
+\usetikzlibrary{lindenmayersystems} 
+\usetikzlibrary[lindenmayersystems] 
+\begin{document}
+\begin{tikzpicture}
+\def\R{2.5} 	% sphere radius
+\def\angEl{35} 	% elevation angle
+\filldraw[top color=blue] (0,0) circle (\R);
+
+\foreach \t in {-80,-60,...,80} { \DrawLatitudeCircle[\R]{\t} }
+
+%% some definitions
+\def\R{2.5} % sphere radius
+\def\angEl{35} % elevation angle
+\def\angAz{-120} % azimuth angle
+\def\angPhi{-40} % longitude of point P
+\def\angBeta{30} % latitude of point P
+
+%% working planes
+\pgfmathsetmacro\H{\R*cos(\angEl)} % distance to north pole
+\tikzset{xyplane/.style={cm={cos(\angAz),sin(\angAz)*sin(\angEl),-sin(\angAz),                              cos(\angAz)*sin(\angEl),(0,-\H)}}}
+\LongitudePlane[xzplane]{\angAz}{\angEl}
+\LongitudePlane[pzplane]{\angPhi}{\angEl}
+\LatitudePlane[equator]{\angEl}{0}
+
+%% characteristic points
+\coordinate (O) at (0,0);
+\coordinate[mark coordinate] (N) at (0,\H);
+\coordinate[mark coordinate] (S) at (0,-\H);
+
+\draw[thick,->] (0,0,0) -- (\R,0,0) node[anchor=north east]{$x$};
+\draw[thick,->] (0,0,0) -- (0,\R,0) node[anchor=north west]{$z$};
+\draw[thick,->] (0,0,0) -- (0,0,1.4*\R) node[anchor=south]{$y$};
+\draw[thick,->] (0,2*\R,0) -- (0,1.2*\R,0); 
+\draw[thick,->] (1,2*\R,0) -- (1,1.2*\R,0); 
+\draw[thick,->] (0.4,2*\R,-1) -- (0.4,1.2*\R,-1); 
+\draw[thick,->] (-0.4,2*\R,-0.5) -- (-0.4,1.2*\R,-0.5); 
+\draw[thick,->] (-1,2*\R,0.5) -- (-1,1.2*\R,0.5); 
+\draw[thick,->] (-2,2*\R,1) -- (-2,1.2*\R,1); 
+\draw[thick,->] (2,2*\R,1) -- (2,1.2*\R,1); 
+\draw[pzplane,->,thin] 
+	(90:0.4*\R) 
+	to [bend right=-30] node[pos=0.2*\R,left] {$\theta$} 
+	(\angBeta:0.3*\R);
+\draw[equator,->,thin] 
+	(\angAz:0.3*\R) 
+	to[bend right=30] node[pos=0.3,below] {$\varphi$}
+	(\angPhi:0.3*\R);
+\end{tikzpicture}
+\end{document}
