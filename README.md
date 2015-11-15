@@ -3,4 +3,4 @@
 
 1. Для запуска приложения, создайте jar-архив, включив в него содержимое директории out/production/EMP/, а также папку META-INF. После чего, можно запускать архив через терминал (или, если сделали разрешение на запуск архива как программы, --- запустить как обычную программу).
 
-2. Документация проекта содержится в pdf-файле EMPh/emph.pdf. Документ был набран в LaTeX, исходные файлы расположены в EMPh/EMPh_LaTeX/. Актуальная на 15.11.15 на моем Google Drive: https://drive.google.com/file/d/0BxeGQqLFjhkDVUlfT1ZJWGpUWkU/view?usp=sharing
+2. Документация проекта содержится в pdf-файле EMPh/emph.pdf. Документ был набран в LaTeX, исходные файлы расположены в EMPh/EMPh_LaTeX/. Актуальная на 15.11.15 документация на моем Google Drive: https://drive.google.com/file/d/0BxeGQqLFjhkDVUlfT1ZJWGpUWkU/view?usp=sharing
